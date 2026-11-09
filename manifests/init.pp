@@ -87,7 +87,7 @@ define concat(
 
   include concat::setup
 
-  $safe_name            = regsubst($name, /[/:]/, '_', 'G')
+  $safe_name            = regsubst($name, /[\/:]/, '_', 'G')
   $concatdir            = $concat::setup::concatdir
   $fragdir              = "${concatdir}/${safe_name}"
   $concat_name          = 'fragments.concat.out'
