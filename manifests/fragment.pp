@@ -66,8 +66,8 @@ define concat::fragment(
 
   include concat::setup
 
-  $safe_name        = regsubst($name, /[\/:\n]/, '_', 'G')
-  $safe_target_name = regsubst($target, /[\/:\n]/, '_', 'G')
+  $safe_name        = join(split($name, "[/:\n]"), '_')
+  $safe_target_name = join(split($target, "[/:\n]"), '_')
   $concatdir        = $concat::setup::concatdir
   $fragdir          = "${concatdir}/${safe_target_name}"
   $fragowner            = $concat::setup::fragment_owner

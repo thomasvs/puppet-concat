@@ -87,7 +87,7 @@ define concat(
 
   include concat::setup
 
-  $safe_name            = regsubst($name, /[\/:]/, '_', 'G')
+  $safe_name            = join(split($name, '[/:]'), '_')
   $concatdir            = $concat::setup::concatdir
   $fragdir              = "${concatdir}/${safe_name}"
   $concat_name          = 'fragments.concat.out'
@@ -115,7 +115,7 @@ define concat(
     }
   }
 
-  $warnmsg_escaped = regsubst($warn_message, /'/, '\'\\\'\'', 'G')
+  $warnmsg_escaped = join(split($warn_message, "'"), "'\\''")
   $warnflag = $warnmsg_escaped ? {
     ''      => '',
     default => "-w '${warnmsg_escaped}'"
@@ -179,7 +179,7 @@ define concat(
     }
 
     # remove extra whitespace from string interpolation to make testing easier
-    $command = strip(regsubst("${script_command} -o \"${fragdir}/${concat_name}\" -d \"${fragdir}\" ${warnflag} ${forceflag} ${orderflag} ${newlineflag}", /\s+/, ' ', 'G'))
+    $command = strip(join(split("${script_command} -o \"${fragdir}/${concat_name}\" -d \"${fragdir}\" ${warnflag} ${forceflag} ${orderflag} ${newlineflag}", "[ \t\r\n]+"), ' '))
 
     # if puppet is running as root, this exec should also run as root to allow
     # the concatfragments.sh script to potentially be installed in path that
